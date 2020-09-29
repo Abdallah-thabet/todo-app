@@ -1,0 +1,31 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <form method="POST" form="form-inline" action="/add_todo/">
+        {% csrf_token %}
+            <div class="input-group mb-3" style="margin-top:70px;">
+                <input type="text" name="todo_text" class="form-control mr-sm-2" placeholder="Add Your Task Here" aria-describedby="basic-addon2">
+                <button class="btn btn-primary bg-success border-0 mb-2 ml-2" type="submit">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <ul class="list-group">
+        {% for todo in todos %}
+            <li class="list-group-item bg-success text-white border-0 m-2" style="font-size:20px;">{{ todo.text }}
+            <span class='mb-0'>----{{ todo.pub_date }}</span>
+            <div class="float-right">
+            <form method="POST" action="/delete_todo/{{ todo.id }}/">
+            {% csrf_token %}
+                <button class="btn btn-danger ml-2" type="submit">Delete</button>
+            </form>
+            </div>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
